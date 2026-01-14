@@ -11,7 +11,9 @@ const Contact: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -22,7 +24,8 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const message = `*New Contact Request*\n\n` +
+    const message =
+      `*New Contact Request*\n\n` +
       `Name: ${formData.name}\n` +
       `Email: ${formData.email}\n` +
       `Phone: ${formData.phone}\n` +
@@ -42,27 +45,37 @@ const Contact: React.FC = () => {
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center mb-12 animate-fade-in">
+
+        {/* Heading */}
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
-            Get In Touch
+            Get in Touch
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-red-600 text-lg max-w-2xl mx-auto">
             Have questions? We'd love to hear from you. Send us a message!
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          <div className="space-y-8 animate-slide-in">
+
+          {/* Contact Info */}
+          <div className="space-y-8">
+
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
+              <h3 className="text-2xl font-bold text-red-700 mb-6">
+                Contact Information
+              </h3>
+
               <div className="space-y-6">
-                <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-xl">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-amber-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-white" />
+
+                {/* Address */}
+                <div className="flex items-start space-x-4 p-4 bg-yellow-100 rounded-xl">
+                  <div className="w-12 h-12 bg-red-700 rounded-full flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-yellow-200" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-800 mb-1">Address</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-bold text-red-700 mb-1">Address</h4>
+                    <p className="text-red-600">
                       4-5 lawyer hari babu gari ricemill,<br />
                       ammani college road,<br />
                       Jaggayyapeta
@@ -70,33 +83,43 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-xl">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-amber-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-white" />
+                {/* Phone */}
+                <div className="flex items-start space-x-4 p-4 bg-yellow-100 rounded-xl">
+                  <div className="w-12 h-12 bg-red-700 rounded-full flex items-center justify-center">
+                    <Phone className="w-6 h-6 text-yellow-200" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-800 mb-1">Phone</h4>
-                    <a href="tel:7416226557" className="text-gray-600 hover:text-red-600 transition-colors">
+                    <h4 className="font-bold text-red-700 mb-1">Phone</h4>
+                    <a
+                      href="tel:7416226557"
+                      className="text-red-600 hover:text-red-800 transition"
+                    >
                       7416226557
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4 p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-xl">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-amber-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-white" />
+                {/* Email */}
+                <div className="flex items-start space-x-4 p-4 bg-yellow-100 rounded-xl">
+                  <div className="w-12 h-12 bg-red-700 rounded-full flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-yellow-200" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-800 mb-1">Email</h4>
-                    <a href="mailto:gowtamiorganicoils@gmail.com" className="text-gray-600 hover:text-red-600 transition-colors break-all">
+                    <h4 className="font-bold text-red-700 mb-1">Email</h4>
+                    <a
+                      href="mailto:gowtamiorganicoils@gmail.com"
+                      className="text-red-600 hover:text-red-800 transition break-all"
+                    >
                       gowtamiorganicoils@gmail.com
                     </a>
                   </div>
                 </div>
+
               </div>
             </div>
 
-            <div className="p-6 bg-gradient-to-br from-red-600 to-amber-500 rounded-2xl text-white shadow-xl">
+            {/* Business Hours */}
+            <div className="p-6 bg-red-700 rounded-2xl text-yellow-200 shadow-lg">
               <h3 className="text-xl font-bold mb-3">Business Hours</h3>
               <div className="space-y-2">
                 <p className="flex justify-between">
@@ -109,60 +132,75 @@ const Contact: React.FC = () => {
                 </p>
               </div>
             </div>
+
           </div>
 
-          <div className="animate-fade-in animation-delay-200">
-            <form onSubmit={handleSubmit} className="bg-gradient-to-br from-amber-50 to-red-50 p-8 rounded-2xl shadow-xl space-y-6">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Send us a Message</h3>
+          {/* Form */}
+          <div>
+            <form
+              onSubmit={handleSubmit}
+              className="bg-yellow-100 p-8 rounded-2xl shadow-lg space-y-6"
+            >
+              <h3 className="text-2xl font-bold text-red-700 mb-4">
+                Send us a Message
+              </h3>
 
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Name *</label>
+                <label className="block text-red-700 font-semibold mb-2">
+                  Name *
+                </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="input-field"
+                  className="w-full px-4 py-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-600"
                   placeholder="Your name"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Email *</label>
+                <label className="block text-red-700 font-semibold mb-2">
+                  Email *
+                </label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="input-field"
+                  className="w-full px-4 py-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-600"
                   placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Phone *</label>
+                <label className="block text-red-700 font-semibold mb-2">
+                  Phone *
+                </label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="input-field"
+                  className="w-full px-4 py-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-600"
                   placeholder="Your phone number"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Message *</label>
+                <label className="block text-red-700 font-semibold mb-2">
+                  Message *
+                </label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="input-field resize-none"
+                  className="w-full px-4 py-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-600 resize-none"
                   placeholder="Your message..."
                 />
               </div>
@@ -170,13 +208,14 @@ const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full btn-primary flex items-center justify-center space-x-2"
+                className="w-full flex items-center justify-center space-x-2 bg-red-700 hover:bg-red-800 text-yellow-200 font-bold py-3 rounded-full transition"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>{isSubmitting ? 'Sending...' : 'Send via WhatsApp'}</span>
               </button>
             </form>
           </div>
+
         </div>
       </div>
     </section>

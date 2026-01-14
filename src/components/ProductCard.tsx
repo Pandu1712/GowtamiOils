@@ -1,78 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ShoppingCart, Eye } from 'lucide-react';
-import type { Product } from '../types';
+import type { Product, ProductSize } from '../types';
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: Product, sizeLabel: string) => void;
   onViewDetails: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
-  const discountPercentage = Math.round(
-    ((product.originalPrice - product.price) / product.originalPrice) * 100
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  onAddToCart,
+  onViewDetails,
+}) => {
+  if (!product.sizes || product.sizes.length === 0) return null;
+
+  // ✅ selected size state
+  const [selectedSize, setSelectedSize] = useState<ProductSize>(
+    product.sizes[0]
   );
 
+  const discount =
+    selectedSize.mrp > selectedSize.price
+      ? Math.round(
+          ((selectedSize.mrp - selectedSize.price) / selectedSize.mrp) * 100
+        )
+      : 0;
+
   return (
-    <div className="card group">
-      <div className="relative overflow-hidden">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-        {discountPercentage > 0 && (
-          <div className="absolute top-4 right-4 bg-gradient-to-r from-red-600 to-amber-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg animate-pulse">
-            {discountPercentage}% OFF
-          </div>
-        )}
-        {!product.inStock && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-            <span className="bg-red-600 text-white px-4 py-2 rounded-full font-bold">
-              Out of Stock
-            </span>
-          </div>
-        )}
-      </div>
+    <div className="card">
+      {/* IMAGE */}
+      <img
+        src={product.image}
+        alt={product.name}
+        className="h-56 w-full object-cover"
+      />
 
-      <div className="p-5">
-        <div className="mb-2">
-          <span className="text-xs font-semibold px-3 py-1 bg-gradient-to-r from-amber-100 to-red-100 text-red-700 rounded-full">
-            {product.category}
+      <div className="p-4">
+        {/* CATEGORY */}
+        <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">
+          {product.category}
+        </span>
+
+        {/* NAME */}
+        <h3 className="font-bold mt-2 line-clamp-2">{product.name}</h3>
+
+        {/* SIZE SELECTOR */}
+        <div className="mt-3">
+          <p className="text-xs text-gray-500 mb-1">Select Size</p>
+          <div className="flex flex-wrap gap-2">
+            {product.sizes.map((size) => (
+              <button
+                key={size.label}
+                onClick={() => setSelectedSize(size)}
+                className={`px-3 py-1 text-xs rounded-full border transition ${
+                  selectedSize.label === size.label
+                    ? 'bg-red-600 text-white border-red-600'
+                    : 'bg-white text-gray-700 hover:border-red-400'
+                }`}
+              >
+                {size.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* PRICE */}
+        <div className="mt-3">
+          <span className="text-xl font-bold text-red-600">
+            ₹{selectedSize.price}
           </span>
-        </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">{product.name}</h3>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
 
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-red-600">₹{product.price}</span>
-              {product.originalPrice > product.price && (
-                <span className="text-sm text-gray-400 line-through">
-                  ₹{product.originalPrice}
-                </span>
-              )}
-            </div>
-            <span className="text-xs text-gray-500">{product.weight}</span>
-          </div>
+          {selectedSize.mrp > selectedSize.price && (
+            <>
+              <span className="ml-2 text-sm line-through text-gray-400">
+                ₹{selectedSize.mrp}
+              </span>
+              <span className="ml-2 text-sm text-green-600 font-semibold">
+                {discount}% OFF
+              </span>
+            </>
+          )}
         </div>
 
-        <div className="flex gap-2">
+        {/* ACTIONS */}
+        <div className="flex gap-2 mt-4">
           <button
             onClick={() => onViewDetails(product)}
-            className="flex-1 bg-gradient-to-r from-amber-500 to-red-600 hover:from-amber-600 hover:to-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
+            className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-2 rounded flex items-center justify-center gap-1"
           >
-            <Eye className="w-4 h-4" />
-            <span>View</span>
+            <Eye size={16} />
+            View
           </button>
+
           <button
-            onClick={() => onAddToCart(product)}
-            disabled={!product.inStock}
-            className="flex-1 bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-700 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() => onAddToCart(product, selectedSize.label)}
+            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded flex items-center justify-center gap-1"
           >
-            <ShoppingCart className="w-4 h-4" />
-            <span>Add</span>
+            <ShoppingCart size={16} />
+            Add
           </button>
         </div>
       </div>

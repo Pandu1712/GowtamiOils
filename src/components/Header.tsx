@@ -41,28 +41,28 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white shadow-xl py-3'
-          : 'bg-gradient-to-r from-red-600 via-amber-500 to-red-600 py-4'
+        isScrolled ? 'bg-white shadow-lg py-3' : 'bg-red-600 py-4'
       }`}
     >
       <nav className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-red-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <span className="text-2xl font-bold text-white">G</span>
+          
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center shadow-md">
+              <span className="text-2xl font-bold text-red-700">G</span>
             </div>
             <div className="flex flex-col">
               <span
-                className={`text-xl font-bold transition-colors duration-300 ${
-                  isScrolled ? 'text-red-600' : 'text-white'
+                className={`text-xl font-bold ${
+                  isScrolled ? 'text-red-600' : 'text-yellow-300'
                 }`}
               >
                 Gowtami Organic
               </span>
               <span
                 className={`text-xs ${
-                  isScrolled ? 'text-amber-600' : 'text-amber-100'
+                  isScrolled ? 'text-yellow-600' : 'text-yellow-200'
                 }`}
               >
                 Pure & Natural
@@ -70,94 +70,98 @@ const Header: React.FC = () => {
             </div>
           </Link>
 
+          {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 onClick={() => handleNavClick(link.path, link.section)}
-                className={`font-semibold transition-all duration-300 hover:scale-110 ${
+                className={`font-semibold transition ${
                   isScrolled
-                    ? 'text-gray-700 hover:text-red-600'
-                    : 'text-white hover:text-amber-200'
+                    ? 'text-red-600 hover:text-yellow-500'
+                    : 'text-yellow-200 hover:text-yellow-400'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
+
+            {/* Call */}
             <a
               href="tel:7416226557"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-full font-semibold transition ${
                 isScrolled
-                  ? 'bg-gradient-to-r from-red-600 to-amber-500 text-white'
-                  : 'bg-white text-red-600'
-              } shadow-lg`}
+                  ? 'bg-red-600 text-yellow-200'
+                  : 'bg-yellow-400 text-red-700'
+              }`}
             >
               <Phone className="w-4 h-4" />
-              <span className="font-semibold">Call Us</span>
+              <span>Call Us</span>
             </a>
+
+            {/* Cart */}
             <Link
               to="/cart"
-              className={`relative flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 ${
+              className={`relative flex items-center space-x-2 px-4 py-2 rounded-full font-semibold transition ${
                 isScrolled
-                  ? 'bg-gradient-to-r from-amber-500 to-red-600 text-white'
-                  : 'bg-white text-amber-600'
-              } shadow-lg`}
+                  ? 'bg-yellow-400 text-red-700'
+                  : 'bg-yellow-300 text-red-700'
+              }`}
             >
               <ShoppingCart className="w-4 h-4" />
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </Link>
           </div>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
-              isScrolled ? 'text-red-600' : 'text-white'
+            className={`lg:hidden p-2 ${
+              isScrolled ? 'text-red-600' : 'text-yellow-200'
             }`}
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 animate-fade-in">
+          <div className="lg:hidden mt-4 pb-4">
             <div className="flex flex-col space-y-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
                   onClick={() => handleNavClick(link.path, link.section)}
-                  className={`font-semibold py-2 px-4 rounded-lg transition-all duration-300 ${
+                  className={`font-semibold py-2 px-4 rounded ${
                     isScrolled
-                      ? 'text-gray-700 hover:bg-red-50'
-                      : 'text-white hover:bg-white/20'
+                      ? 'text-red-600 hover:bg-yellow-100'
+                      : 'text-yellow-200 hover:bg-red-500/20'
                   }`}
                 >
                   {link.name}
                 </Link>
               ))}
+
               <a
                 href="tel:7416226557"
-                className="flex items-center justify-center space-x-2 bg-white text-red-600 py-2 px-4 rounded-lg font-semibold shadow-lg hover:scale-105 transition-transform duration-300"
+                className="flex items-center justify-center space-x-2 bg-yellow-400 text-red-700 py-2 rounded font-semibold"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call Us</span>
               </a>
+
               <Link
                 to="/cart"
-                className="flex items-center justify-center space-x-2 bg-white text-amber-600 py-2 px-4 rounded-lg font-semibold shadow-lg hover:scale-105 transition-transform duration-300 relative"
+                className="flex items-center justify-center space-x-2 bg-yellow-300 text-red-700 py-2 rounded font-semibold"
               >
                 <ShoppingCart className="w-4 h-4" />
-                <span>Cart</span>
-                {totalItems > 0 && (
-                  <span className="bg-red-600 text-white text-xs font-bold rounded-full px-2 py-1">
-                    {totalItems}
-                  </span>
-                )}
+                <span>Cart ({totalItems})</span>
               </Link>
             </div>
           </div>

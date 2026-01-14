@@ -1,100 +1,68 @@
-import React from 'react';
-import { X, ShoppingCart, Package, Info } from 'lucide-react';
-import type { Product } from '../types';
+import React, { useState } from 'react';
+import { X, ShoppingCart } from 'lucide-react';
+import type { Product, ProductSize } from '../types';
 
 interface ProductModalProps {
   product: Product;
   onClose: () => void;
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: Product, sizeLabel: string) => void;
 }
 
-const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onAddToCart }) => {
-  const discountPercentage = Math.round(
-    ((product.originalPrice - product.price) / product.originalPrice) * 100
-  );
+const ProductModal: React.FC<ProductModalProps> = ({
+  product,
+  onClose,
+  onAddToCart,
+}) => {
+  const [size, setSize] = useState<ProductSize>(product.sizes[0]);
 
-  const handleAddToCart = () => {
-    onAddToCart(product);
-    onClose();
-  };
+  const discount =
+    Math.round(((size.mrp - size.price) / size.mrp) * 100);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slide-in">
-        <div className="sticky top-0 bg-white z-10 flex justify-between items-center p-6 border-b">
-          <h2 className="text-2xl font-bold gradient-text">Product Details</h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
-          >
-            <X className="w-6 h-6 text-gray-600" />
-          </button>
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-xl w-full max-w-3xl">
+        <button onClick={onClose} className="float-right">
+          <X />
+        </button>
+
+        <img src={product.image} className="h-80 w-full object-cover rounded" />
+
+        <h2 className="text-2xl font-bold mt-4">{product.name}</h2>
+
+        <div className="mt-2">
+          <span className="text-3xl font-bold text-red-600">
+            ₹{size.price}
+          </span>
+          <span className="ml-2 line-through text-gray-400">
+            ₹{size.mrp}
+          </span>
+          <span className="ml-2 text-green-600">
+            {discount}% OFF
+          </span>
         </div>
 
-        <div className="p-6">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="relative">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-96 object-cover rounded-xl shadow-lg"
-              />
-              {discountPercentage > 0 && (
-                <div className="absolute top-4 right-4 bg-gradient-to-r from-red-600 to-amber-500 text-white px-4 py-2 rounded-full font-bold shadow-lg animate-pulse">
-                  {discountPercentage}% OFF
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <span className="text-sm font-semibold px-3 py-1 bg-gradient-to-r from-amber-100 to-red-100 text-red-700 rounded-full">
-                  {product.category}
-                </span>
-                <h3 className="text-3xl font-bold text-gray-800 mt-3 mb-2">{product.name}</h3>
-                <div className="flex items-center space-x-3 mb-4">
-                  <span className="text-4xl font-bold text-red-600">₹{product.price}</span>
-                  {product.originalPrice > product.price && (
-                    <span className="text-xl text-gray-400 line-through">
-                      ₹{product.originalPrice}
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center space-x-2 text-gray-600">
-                  <Package className="w-5 h-5 text-amber-600" />
-                  <span className="font-semibold">Weight: {product.weight}</span>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-500">
-                  <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                    <Info className="w-5 h-5 mr-2 text-amber-600" />
-                    Description
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">{product.description}</p>
-                </div>
-
-                <div className="p-4 bg-red-50 rounded-xl border-l-4 border-red-500">
-                  <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                    <Info className="w-5 h-5 mr-2 text-red-600" />
-                    How to Use
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">{product.howToUse}</p>
-                </div>
-              </div>
-
-              <button
-                onClick={handleAddToCart}
-                disabled={!product.inStock}
-                className="w-full btn-primary flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
-              </button>
-            </div>
-          </div>
+        <div className="flex gap-2 mt-4">
+          {product.sizes.map(s => (
+            <button
+              key={s.label}
+              onClick={() => setSize(s)}
+              className={`px-3 py-2 border rounded ${
+                s.label === size.label
+                  ? 'bg-red-600 text-white'
+                  : ''
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
         </div>
+
+        <button
+          onClick={() => onAddToCart(product, size.label)}
+          className="mt-6 w-full bg-red-600 text-white py-3 rounded flex justify-center gap-2"
+        >
+          <ShoppingCart /> Add to Cart
+        </button>
       </div>
     </div>
   );

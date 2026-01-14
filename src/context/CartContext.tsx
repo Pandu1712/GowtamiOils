@@ -3,9 +3,9 @@ import type { CartItem, Product } from '../types';
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addToCart: (product: Product, sizeLabel: string) => void;
+  removeFromCart: (productId: string, sizeLabel: string) => void;
+  updateQuantity: (productId: string, sizeLabel: string, quantity: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
@@ -23,47 +23,76 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('gowtami-cart', JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
+  // ✅ ADD TO CART WITH SIZE
+  const addToCart = (product: Product, sizeLabel: string) => {
+    const selectedSize = product.sizes.find(s => s.label === sizeLabel);
+    if (!selectedSize) return;
+
+    setCart(prevCart => {
+      const existingItem = prevCart.find(
+        item => item.productId === product.id && item.sizeLabel === sizeLabel
+      );
+
       if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
+        return prevCart.map(item =>
+          item.productId === product.id && item.sizeLabel === sizeLabel
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      return [...prevCart, { ...product, quantity: 1 }];
+
+      return [
+        ...prevCart,
+        {
+          productId: product.id,
+          name: product.name,
+          image: product.image,
+          category: product.category,
+          sizeLabel,
+          price: selectedSize.price,
+          mrp: selectedSize.mrp,
+          quantity: 1,
+        },
+      ];
     });
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-  };
-
-  const updateQuantity = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
+  // ✅ REMOVE ITEM (SIZE-SPECIFIC)
+  const removeFromCart = (productId: string, sizeLabel: string) => {
+    setCart(prevCart =>
+      prevCart.filter(
+        item => !(item.productId === productId && item.sizeLabel === sizeLabel)
       )
     );
   };
 
-  const clearCart = () => {
-    setCart([]);
+  // ✅ UPDATE QUANTITY
+  const updateQuantity = (
+    productId: string,
+    sizeLabel: string,
+    quantity: number
+  ) => {
+    if (quantity <= 0) {
+      removeFromCart(productId, sizeLabel);
+      return;
+    }
+
+    setCart(prevCart =>
+      prevCart.map(item =>
+        item.productId === productId && item.sizeLabel === sizeLabel
+          ? { ...item, quantity }
+          : item
+      )
+    );
   };
 
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+  const clearCart = () => setCart([]);
 
-  const getTotalItems = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
-  };
+  const getTotalPrice = () =>
+    cart.reduce((total, item) => total + item.price * item.quantity, 0);
+
+  const getTotalItems = () =>
+    cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <CartContext.Provider
@@ -84,7 +113,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useCart = () => {
   const context = useContext(CartContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useCart must be used within a CartProvider');
   }
   return context;

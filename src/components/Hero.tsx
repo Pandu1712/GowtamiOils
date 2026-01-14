@@ -49,6 +49,7 @@ const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative h-screen overflow-hidden mt-16">
+      {/* Background Images */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
           <div
@@ -57,7 +58,9 @@ const Hero: React.FC = () => {
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-900/80 via-amber-900/70 to-red-900/80 z-10"></div>
+            {/* Solid overlay – NO gradient */}
+            <div className="absolute inset-0 bg-red-900/75 z-10"></div>
+
             <img
               src={slide.image}
               alt={slide.title}
@@ -67,9 +70,10 @@ const Hero: React.FC = () => {
         ))}
       </div>
 
+      {/* Content */}
       <div className="relative z-20 h-full flex items-center">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl animate-fade-in">
+          <div className="max-w-3xl">
             {slides.map((slide, index) => (
               <div
                 key={index}
@@ -77,29 +81,35 @@ const Hero: React.FC = () => {
                   index === currentSlide ? 'opacity-100' : 'opacity-0 absolute'
                 }`}
               >
-                <div className="flex items-center space-x-2 mb-4 animate-slide-in">
-                  <Sparkles className="w-6 h-6 text-amber-400" />
-                  <span className="text-amber-300 text-lg font-semibold tracking-wide">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Sparkles className="w-6 h-6 text-yellow-400" />
+                  <span className="text-yellow-300 text-lg font-semibold">
                     {slide.subtitle}
                   </span>
                 </div>
-                <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-slide-in animation-delay-200">
+
+                <h1 className="text-5xl md:text-7xl font-bold text-yellow-200 mb-6 leading-tight">
                   {slide.title}
                 </h1>
-                <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed animate-slide-in animation-delay-400">
+
+                <p className="text-xl md:text-2xl text-yellow-100 mb-8 leading-relaxed">
                   {slide.description}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 animate-slide-in animation-delay-600">
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Shop Now */}
                   <Link
                     to="/products"
-                    className="btn-primary flex items-center justify-center space-x-2"
+                    className="flex items-center justify-center space-x-2 bg-yellow-400 text-red-800 font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition"
                   >
                     <ShoppingBag className="w-5 h-5" />
                     <span>Shop Now</span>
                   </Link>
+
+                  {/* Learn More */}
                   <Link
                     to="/about"
-                    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-semibold py-3 px-8 rounded-full border-2 border-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-center"
+                    className="bg-red-700 hover:bg-red-600 text-yellow-200 font-semibold py-3 px-8 rounded-full border-2 border-yellow-300 shadow-lg hover:scale-105 transition text-center"
                   >
                     Learn More
                   </Link>
@@ -110,28 +120,31 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
+      {/* Controls */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 hover:scale-110"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-yellow-400 text-red-800 p-3 rounded-full hover:scale-110 transition"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
+
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 hover:scale-110"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-yellow-400 text-red-800 p-3 rounded-full hover:scale-110 transition"
       >
         <ChevronRight className="w-6 h-6" />
       </button>
 
+      {/* Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex space-x-3">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`h-3 rounded-full transition-all ${
               index === currentSlide
-                ? 'bg-amber-500 w-12'
-                : 'bg-white/50 hover:bg-white/75'
+                ? 'bg-yellow-400 w-10'
+                : 'bg-yellow-200 w-3 hover:bg-yellow-300'
             }`}
           />
         ))}
