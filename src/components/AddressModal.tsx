@@ -41,12 +41,13 @@ const AddressModal: React.FC<AddressModalProps> = ({ cart, totalPrice, onClose, 
     }
     message += `\n*Order Details:*\n`;
 
-    cart.forEach((item, index) => {
-      message += `\n${index + 1}. ${item.name}\n`;
-      message += `   Weight: ${item.weight}\n`;
-      message += `   Quantity: ${item.quantity}\n`;
-      message += `   Price: ₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}\n`;
-    });
+cart.forEach((item, index) => {
+  message += `\n${index + 1}. ${item.name}\n`;
+  message += `   Size: ${item.sizeLabel}\n`;
+  message += `   Quantity: ${item.quantity}\n`;
+  message += `   Price: ₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}\n`;
+});
+
 
     message += `\n*Total Amount: ₹${totalPrice}*\n`;
     message += `\nThank you for your order!`;
@@ -175,7 +176,8 @@ const AddressModal: React.FC<AddressModalProps> = ({ cart, totalPrice, onClose, 
             <h3 className="font-bold text-gray-800 mb-2">Order Summary</h3>
             <div className="space-y-1 text-sm text-gray-600">
               {cart.map((item) => (
-                <div key={item.id} className="flex justify-between">
+                <div key={item.productId} className="flex justify-between">
+
                   <span>
                     {item.name} ({item.quantity}x)
                   </span>
