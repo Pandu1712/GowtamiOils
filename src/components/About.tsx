@@ -53,22 +53,22 @@ const About: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-4 animate-fade-in animation-delay-200">
             <img
-              src="https://images.pexels.com/photos/4202390/pexels-photo-4202390.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469708/Coconut-Oil_veklkw.png"
               alt="Organic Production"
               className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300"
             />
             <img
-              src="https://images.pexels.com/photos/4198918/pexels-photo-4198918.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469708/Badam_Oil_fuk0zu.webp"
               alt="Quality Products"
               className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300 mt-8"
             />
             <img
-              src="https://images.pexels.com/photos/6210747/pexels-photo-6210747.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469688/Peanut_Chikki_uo8i1i.jpg"
               alt="Traditional Snacks"
               className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300"
             />
             <img
-              src="https://images.pexels.com/photos/4198935/pexels-photo-4198935.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469684/Ragi_maycov.webp"
               alt="Spices"
               className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300 mt-8"
             />

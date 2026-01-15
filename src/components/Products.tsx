@@ -17,8 +17,11 @@ const Products: React.FC = () => {
     'All',
     'Cold Pressed Oil',
     'Wood Pressed Oil',
-    'Ghee',
+    'Hot',
     'Flour',
+    'Natural Jaggery Snacks',
+    'Natural Jaggery',
+
   ];
 
   const filteredProducts = products.filter((product) => {

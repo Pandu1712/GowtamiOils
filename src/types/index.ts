@@ -1,5 +1,5 @@
 export interface ProductSize {
-  label: '250ml' | '500ml' | '1L' | '5L' | '15kg';
+  label: '250ml' | '500ml' | '1L' | '5L' | '15kg'| '1kg' | '500g' | '250g' | '100g'|'800–900g';
   price: number; // offer price
   mrp: number;   // original price
 }
@@ -7,7 +7,7 @@ export interface ProductSize {
 export interface Product {
   id: string;
   name: string;
-  category: 'Cold Pressed Oil' | 'Wood Pressed Oil' | 'Ghee' | 'Flour';
+  category: 'Cold Pressed Oil' | 'Wood Pressed Oil' |'Flour'|'Hot' | 'Natural Jaggery Snacks'|'Natural Jaggery' ;
   sizes: ProductSize[];
   image: string;
   description: string;
