@@ -7,25 +7,25 @@ const Hero: React.FC = () => {
 
   const slides = [
     {
-      image: 'https://images.pexels.com/photos/4202390/pexels-photo-4202390.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      image: 'https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469708/Groundnut_Oil_lcsrh4.webp',
       title: 'Pure Organic Oils',
       subtitle: 'Cold Pressed & Natural',
       description: 'Experience the authentic taste of traditional cold pressed oils',
     },
     {
-      image: 'https://images.pexels.com/photos/6210747/pexels-photo-6210747.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      image: 'https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469708/Badam_Oil_fuk0zu.webp',
       title: 'Authentic Traditional Snacks',
       subtitle: 'Made with Love & Care',
       description: 'Crispy, delicious snacks that bring back childhood memories',
     },
     {
-      image: 'https://images.pexels.com/photos/4198935/pexels-photo-4198935.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      image: 'https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469684/Wheat_Flour_kcobor.webp',
       title: 'Fresh Spices & Pickles',
       subtitle: 'Rich in Flavor',
       description: 'Handcrafted spices and pickles with traditional recipes',
     },
     {
-      image: 'https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      image: 'https://res.cloudinary.com/dyfkwasrl/image/upload/v1768469684/Hot_Mixture_jjmi9p.webp',
       title: 'Natural Sweet Delights',
       subtitle: 'Healthy & Tasty',
       description: 'Pure jaggery-based sweets for a guilt-free indulgence',
